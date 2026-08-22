@@ -1,0 +1,70 @@
+# Commander Anthology root ignore policy
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Environment and local machine config
+.env
+*.env
+local.properties
+local.properties.bak
+backend.local.json
+
+# IDE state
+.idea/workspace.xml
+.idea/caches/
+*.iml
+
+# Java/Gradle/Android build output
+.gradle/
+build/
+*/build/
+out/
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.apk
+*.aab
+*.ap_
+*.dex
+captures/
+externalNativeBuild/
+.cxx/
+
+# Python prototype/runtime output
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.cache/
+
+# Logs and sessions
+logs/
+*.log
+Commander-Sim/PROD/data/logs/
+Commander-Sim/DEV/logs/
+Commander-Sim/PROD/data/sessions/
+
+# User/runtime data
+*.local.json
+*.user.json
+commander-analyst-data.json
+
+# Scryfall bulk downloads and generated caches
+Commander analyst/data/scryfall-bulk-data/
+Commander-Sim/PROD/data/library/global/card_codex/scryfall_cache/
+Commander-Sim/PROD/data/library/global/card_codex/card_records.json
+Commander-Sim/PROD/data/library/global/card_codex/card_id_map.json
+Commander-Sim/PROD/data/library/global/card_codex/import_report.json
+Commander-Sim/PROD/data/library/global/card_codex/codex_manifest.json
+*.sqlite
+*.sqlite3
+*.db
+
+# Large local reference/source artifacts
+MagicCompRules 20260227.docx
+.forge-reference/

@@ -1,0 +1,234 @@
+{
+  "main": {
+    "id": "08a1e1977555ea8f",
+    "type": "split",
+    "children": [
+      {
+        "id": "17f56ab38fd05874",
+        "type": "tabs",
+        "dimension": 45.81218274111675,
+        "children": [
+          {
+            "id": "8608f60cf3136645",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "rules/mana-abilities.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "mana-abilities"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ab92aa7c05eb3804",
+        "type": "tabs",
+        "dimension": 54.18781725888325,
+        "children": [
+          {
+            "id": "7302a15bf52f295c",
+            "type": "leaf",
+            "pinned": true,
+            "state": {
+              "type": "graph",
+              "state": {},
+              "pinned": true,
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5bfc5fb115e86fbe",
+    "type": "split",
+    "children": [
+      {
+        "id": "29ad3f784475168f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "841049cce8959621",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "7cb3e4c5b413b6ac",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d06af966e4e04b1b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "f36a58597ed11802",
+    "type": "split",
+    "children": [
+      {
+        "id": "f8dca4b7a402bb13",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f7289fa8276fb7ce",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "a12a266f4383596e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links"
+            }
+          },
+          {
+            "id": "61621775e8886ef2",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "81ea4ce5075e450b",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "396143ee5831c1f6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "8608f60cf3136645",
+  "lastOpenFiles": [
+    "decisions/0027 Commander Anthology Licensing Policy.md",
+    "rules/timing-and-priority.md",
+    "rules/costs-and-mana.md",
+    "rules/comprehensive-rules-inventory.md",
+    "rules/turn-structure.md",
+    "rules/CAPABILITY_MATRIX.md",
+    "rules/state-based-actions.md",
+    "rules/keyword-abilities.md",
+    "rules/ai-legal-move-boundary.md",
+    "rules/draw-step.md",
+    "rules/casting-spells-basic.md",
+    "rules/mana-abilities.md",
+    "rules/README.md",
+    "areas/Packaging And Installer.md",
+    "areas/Sim Integration.md",
+    "decisions/0012 Deck Metadata Model.md",
+    "Mobile Companion.md",
+    "Glossary.md",
+    "Decision Queue.md",
+    "Commander Sim.md",
+    "DDS.md",
+    "Commander Anthology.md",
+    "CCBuilder.md",
+    "KANBAN.md",
+    "decisions/0009 Deck Data And Precon Catalog.md",
+    "areas/Cross Platform Sync.md"
+  ]
+}
