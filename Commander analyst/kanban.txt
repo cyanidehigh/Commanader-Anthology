@@ -1,0 +1,639 @@
+Commander Analyst Kanban
+========================
+
+Last updated: 2026-07-12
+Primary target: Desktop first
+Secondary target: Android companion later
+
+Status Legend
+-------------
+
+[DONE]      Completed and verified enough for the current stage.
+[DOING]     Active work.
+[NEXT]      Next planned work once active items finish.
+[BACKLOG]   Planned but not yet queued.
+[BLOCKED]   Cannot progress until a decision, dependency, or prior item lands.
+[PARKED]    Deliberately deferred.
+
+Checkpoint Legend
+-----------------
+
+[ ] Not started
+[~] Started / partial
+[x] Complete
+
+
+Milestone M0 - Product Direction And Groundwork
+===============================================
+
+Goal
+----
+
+Lock the product direction and avoid more false starts.
+
+Done Means
+----------
+
+- Desktop is clearly the main target.
+- Android is clearly a companion later.
+- Shared core owns reusable product logic.
+- README, HANDOFF, and kanban agree.
+
+Items
+-----
+
+M0-001 [DONE] Remove static web prototype
+  Depends on: none
+  Checkpoints:
+  [x] Remove earlier HTML/CSS/JS prototype
+  [x] Keep workspace focused on app implementation
+
+M0-002 [DONE] Capture design-first process
+  Depends on: none
+  Checkpoints:
+  [x] README says design first, then build
+  [x] HANDOFF says design first, then build
+  [x] No questionnaire/custom playstyle flow locked in
+
+M0-003 [DONE] Pivot to desktop-first
+  Depends on: M0-002
+  Checkpoints:
+  [x] README says desktop-first
+  [x] HANDOFF says desktop-first
+  [x] Android marked as later companion
+  [x] No web pivot
+
+
+Milestone M1 - Desktop App Foundation
+=====================================
+
+Goal
+----
+
+Have a click-to-run desktop app with visible branding, basic navigation, editable data, and persistence.
+
+Done Means
+----------
+
+- User can launch without terminal commands.
+- User can create/edit/delete decks and collection records.
+- Data survives app restart.
+- Build passes.
+
+Items
+-----
+
+M1-001 [DONE] Add shared core module
+  Depends on: M0-003
+  Checkpoints:
+  [x] Add `shared-core`
+  [x] Move/add platform-neutral card models
+  [x] Move/add platform-neutral collection models
+  [x] Move/add platform-neutral deck models
+  [x] Add sync bundle model
+
+M1-002 [DONE] Add desktop module
+  Depends on: M1-001
+  Checkpoints:
+  [x] Add `desktop`
+  [x] Configure Compose Desktop
+  [x] Build desktop module
+  [x] Keep Android module intact
+
+M1-003 [DONE] Add desktop launcher
+  Depends on: M1-002
+  Checkpoints:
+  [x] Add `Launch Commander Analyst.bat`
+  [x] Launcher runs `:desktop:run`
+  [x] README documents launcher
+  [x] HANDOFF documents launcher
+
+M1-004 [DONE] Add desktop branding
+  Depends on: M1-002
+  Checkpoints:
+  [x] Copy Cynful logo into desktop resources
+  [x] Show logo in sidebar
+  [x] Use dark/gold/red theme
+
+M1-005 [DONE] Add desktop navigation
+  Depends on: M1-002
+  Checkpoints:
+  [x] Decks workspace
+  [x] Collection workspace
+  [x] Search placeholder
+  [x] Sync placeholder
+
+M1-006 [DONE] Add editable deck workspace
+  Depends on: M1-005
+  Checkpoints:
+  [x] Create deck
+  [x] Edit deck
+  [x] Delete deck
+  [x] Sort deck menu alphabetically
+  [x] Add deck row
+  [x] Edit deck row
+  [x] Delete deck row
+
+M1-007 [DONE] Add editable collection workspace
+  Depends on: M1-005
+  Checkpoints:
+  [x] Create container
+  [x] Edit container
+  [x] Delete container
+  [x] Scroll collection container menu
+  [x] Add collection card row
+  [x] Edit collection card row
+  [x] Move collection card row between containers
+  [x] Merge moved rows into matching target-container printings
+  [x] Delete collection card row
+
+M1-008 [DONE] Add local persistence
+  Depends on: M1-006, M1-007
+  Checkpoints:
+  [x] Add Kotlin serialization
+  [x] Save local JSON state
+  [x] Load local JSON state on startup
+  [x] Seed sample data only when no save exists
+  [x] Document save file location
+  [x] User verified persistence works
+
+M1-009 [DONE] Verify desktop build
+  Depends on: M1-008
+  Checkpoints:
+  [x] `.\gradlew.bat --no-daemon :desktop:build --console=plain` passes
+
+
+Milestone M2 - Card Identity And Manual Entry Quality
+=====================================================
+
+Goal
+----
+
+Manual rows should stop being loose text and start becoming real card identities while still allowing unknown/proxy/custom entries.
+
+Done Means
+----------
+
+- User can type a card name and resolve it to a Scryfall-backed identity.
+- App stores both display text and resolved identity.
+- Duplicate rows can be detected and merged safely.
+- Unknown cards remain supported as manual entries.
+
+Items
+-----
+
+M2-001 [NEXT] Define card identity model
+  Depends on: M1-008
+  Checkpoints:
+  [x] Decide fields for resolved card identity
+  [x] Add hidden oracle ID fields for deck matching
+  [x] Add printing-specific fields for collection rows
+  [x] Preserve manual display name
+  [x] Support unresolved/manual/ambiguous state
+  [x] Update sync bundle shape for assignments
+
+M2-002 [NEXT] Add card-name normalization
+  Depends on: M2-001
+  Checkpoints:
+  [x] Normalize whitespace
+  [x] Normalize case for comparisons
+  [ ] Preserve display casing
+  [x] Add duplicate detection helper
+
+M2-003 [DOING] Merge duplicate manual entries
+  Depends on: M2-002
+  Checkpoints:
+  [x] Merge duplicate collection rows in same container
+  [ ] Merge duplicate deck rows in same deck/section
+  [ ] Confirm before destructive-looking merges if needed
+  [x] Save merged state
+  [x] Merge existing duplicate unassigned inventory rows on load
+
+M2-004 [DOING] Add Scryfall lookup foundation
+  Depends on: M2-001
+  Checkpoints:
+  [x] Add Scryfall API client
+  [x] Add exact name lookup
+  [x] Add fuzzy name lookup
+  [x] Add optional set-code narrowing
+  [x] Handle no match
+  [x] Handle multiple printings within the same set
+  [ ] Handle broad multiple possible matches
+  [ ] Cache basic results locally
+  [x] Add Scryfall bulk metadata update check
+  [x] Add Scryfall bulk data install/update action
+  [x] Store Scryfall bulk files under project `data/scryfall-bulk-data`
+  [x] Show bulk install/update progress bar
+  [x] Store local bulk data timestamps in manifest
+  [x] Use Scryfall bulk data as local lookup/detail cache source
+  [x] Add persistent lookup index snapshot for faster local lookups
+  [x] Add Sync action to build lookup index
+  [x] Add SQLite card cache from Scryfall default cards
+  [x] Use SQLite before bulk object index/API for lookups
+  [x] Add Sync action/progress for SQLite cache build
+  [x] Remove full bulk object index from interactive lookup fallback
+  [x] Add live Scryfall request timeouts
+  [x] Fix SQLite cache import transaction/pragmas error
+  [x] Avoid loading full lookup index for card detail sheets
+  [x] Add small per-card detail cache
+  [x] Split image loading away from detail loading
+  [ ] Use Scryfall bulk data as search/suggestion source
+
+M2-005 [DOING] Add lookup UI to manual entry dialogs
+  Depends on: M2-004
+  Checkpoints:
+  [x] Show suggested match on lookup button
+  [x] Add optional set-code field to narrow printing lookup
+  [x] Add foil toggle to collection card add/edit
+  [x] Add selectable printing chips when set lookup returns multiple copies
+  [x] Replace printing chips with visible scrollable printing selector
+  [x] Show all known printings when set code is blank
+  [x] Show visible resolved/manual badges on rows
+  [x] Move row counts left of card names and remove duplicate subtitle data
+  [x] Open first-pass card detail sheet from card names
+  [x] Simplify detail sheet to Commander legality and one preferred price
+  [x] Let user accept match by saving resolved result
+  [x] Let user keep manual entry by skipping lookup
+  [x] Store resolved card identity
+  [x] Store foil state on physical collection rows
+  [x] Infer deck card section from Scryfall type line
+  [x] Sort collection containers alphabetically in the UI
+  [x] Sort cards inside containers by set code and collector number
+
+
+Milestone M3 - Deck Import
+==========================
+
+Goal
+----
+
+Import real Commander decklists into the desktop app and review them before saving.
+
+Done Means
+----------
+
+- User can paste/import a plain text decklist.
+- App parses quantity and card names.
+- App suggests commander candidate.
+- User can review unknown/duplicate/problem rows.
+- Imported deck becomes editable deck intent.
+
+Items
+-----
+
+M3-001 [DONE] Design import parser format support
+  Depends on: M2-001
+  Checkpoints:
+  [x] Simple `1 Card Name` lines
+  [x] Section headers
+  [x] Commander line
+  [x] Blank/comment lines
+  [x] Sideboard/maybeboard ignored or flagged
+
+M3-002 [DONE] Build plain text parser
+  Depends on: M3-001
+  Checkpoints:
+  [x] Parse quantities
+  [x] Parse card names
+  [x] Preserve source order
+  [x] Assign basic sections when obvious
+  [x] Report parse warnings
+
+M3-003 [DOING] Add import review UI
+  Depends on: M3-002, M2-004
+  Checkpoints:
+  [x] Paste/import screen
+  [x] Parsed row preview
+  [x] Resolve imported rows through Scryfall before import
+  [x] Resolve imported rows from bulk cache before API fallback
+  [x] Save resolved imported identity fields
+  [x] Infer imported row section from Scryfall type line
+  [x] Report unresolved import lookup failures
+  [x] Use any Scryfall version for imported deck intent
+  [x] Back off on Scryfall 429/503 during lookup
+  [x] Cache repeated import lookup names during resolve
+  [x] Replace cramped import badges with readable review rows
+  [x] Warning display
+  [x] Unknown row display
+  [ ] Duplicate display
+  [ ] Commander candidate selection
+  [x] Save into selected deck
+  [ ] Save as new deck
+
+
+Milestone M3.5 - Collection Import
+==================================
+
+Goal
+----
+
+Import real owned cards into a chosen physical container without losing printing, foil, or quantity detail.
+
+Done Means
+----------
+
+- User can paste/import a collection list into a selected container.
+- App parses quantity, card name, optional set code, optional collector number, and optional foil flag.
+- App resolves rows to exact Scryfall printings where possible.
+- Ambiguous rows are shown for review instead of silently choosing a physical printing.
+- Imported rows merge with matching physical rows in the target container.
+
+Items
+-----
+
+M3.5-001 [NEXT] Design collection import format support
+  Depends on: M2-004, M2-005
+  Checkpoints:
+  [x] Support `1 Card Name` lines
+  [x] Support `1 Card Name (SET) #123` style lines
+  [x] Support CSV exports with card name, set code, collector number, quantity, finish, and Scryfall ID columns
+  [x] Support set code and collector number columns or suffixes
+  [x] Support foil marker such as `foil`, `*F*`, or `F`
+  [x] Ignore blank/comment/header lines
+  [x] Preserve unresolved manual rows for review
+
+M3.5-002 [DOING] Build collection import parser
+  Depends on: M3.5-001
+  Checkpoints:
+  [x] Load CSV file from disk
+  [x] Parse quantity
+  [x] Parse card name
+  [x] Parse optional set code
+  [x] Parse optional collector number
+  [x] Parse optional foil flag
+  [x] Parse optional Scryfall ID
+  [x] Report parse warnings
+
+M3.5-003 [DOING] Resolve collection import rows
+  Depends on: M3.5-002
+  Checkpoints:
+  [x] Resolve Scryfall ID rows first
+  [x] Resolve exact set/collector printings first
+  [x] Resolve set-only rows to selectable printing choices
+  [x] Resolve name-only rows to visible printing choices
+  [x] Use local SQLite cache before API fallback
+  [x] Show ambiguous rows for manual selection
+  [x] Keep unresolved rows importable as manual entries
+
+M3.5-004 [DOING] Add collection import review UI
+  Depends on: M3.5-003
+  Checkpoints:
+  [x] Add Import button to selected container
+  [x] Paste/import screen for owned cards
+  [x] Review rows with quantity, foil, set, collector, and resolved status
+  [x] Let user choose printing for ambiguous rows
+  [ ] Show duplicate/merge preview before import
+  [x] Save into selected container
+
+M3.5-005 [DOING] Save imported collection rows
+  Depends on: M3.5-004
+  Checkpoints:
+  [x] Create physical collection rows for resolved printings
+  [x] Merge matching rows in target container
+  [x] Preserve foil/nonfoil separation
+  [x] Save unresolved/manual rows safely
+  [x] Persist after import
+
+
+Milestone M4 - Collection Awareness
+===================================
+
+Goal
+----
+
+Deck rows should compare against physical inventory and let the user move owned real-world copies into decks.
+
+Done Means
+----------
+
+- Deck detail shows assigned / available / missing states.
+- User can see where an available card lives.
+- User can choose which owned printing/version to use.
+- Assigning a card moves the physical inventory from its current container into the deck.
+- Unassigning a card moves the physical inventory back to a chosen container.
+- The app never duplicates owned copies when assigning to a deck.
+
+Items
+-----
+
+M4-001 [BACKLOG] Define physical assignment state model
+  Depends on: M2-001
+  Checkpoints:
+  [x] Deck slot represents intent, normally oracle-level
+  [x] Collection entry represents owned physical printing/version
+  [x] Deck assignment links deck intent to physical inventory
+  [ ] Assigned to this deck
+  [ ] Available in collection
+  [ ] Missing
+  [ ] Owned but in another deck
+  [ ] Unknown/unresolved
+
+M4-002 [DOING] Compare deck intent against inventory
+  Depends on: M4-001
+  Checkpoints:
+  [ ] Match deck oracle ID against collection oracle ID
+  [ ] Show all owned printings that satisfy the deck slot
+  [x] Fallback match by normalized name
+  [x] Count desired quantity
+  [x] Count assigned quantity
+  [x] Count available quantity outside this deck
+  [x] Produce row state
+
+M4-003 [DOING] Show ownership state in deck UI
+  Depends on: M4-002
+  Checkpoints:
+  [x] Assigned indicator
+  [x] Available indicator
+  [x] Missing indicator
+  [x] Source container display
+  [~] Deck completion percentage
+  [x] Hide internal deck containers from Collection workspace
+
+M4-004 [BACKLOG] Choose owned printing for deck slot
+  Depends on: M4-003
+  Checkpoints:
+  [x] Add first-pass clickable row symbol
+  [x] Open "choose copy" dialog from a deck row
+  [x] List available owned printings/versions
+  [x] Display printing name, set code, collector number, and source container
+  [x] Show card art preview for selectable owned copies when image data is available
+  [x] Prefer assigned physical printing for deck row badges and card detail popup
+  [ ] Show copies already locked in other decks
+  [ ] Allow missing/proxy/manual later path
+
+M4-005 [DOING] Move/assign physical card copies
+  Depends on: M4-004
+  Checkpoints:
+  [x] Explicit move from source container to deck container
+  [x] Do not silently move from other decks
+  [x] Split inventory stack if assigning less than full quantity
+  [x] Create deck assignment record
+  [x] Save movement
+
+M4-006 [DOING] Unassign physical card copies
+  Depends on: M4-005
+  Checkpoints:
+  [x] Remove assignment record
+  [ ] Ask where the physical card should go
+  [x] Move card back to original container when known
+  [x] Merge stack where safe
+  [x] Save movement
+
+
+Milestone M5 - Search And Suggestions
+=====================================
+
+Goal
+----
+
+Add commander-aware search and early deterministic suggestions.
+
+Done Means
+----------
+
+- Search can filter legal/owned/available/suggestions.
+- Suggestions are based on local facts first.
+- Explanations are deterministic before AI is involved.
+
+Items
+-----
+
+M5-001 [BACKLOG] Search workspace
+  Depends on: M2-004
+  Checkpoints:
+  [ ] Text search
+  [ ] Legal in commander chip
+  [ ] Owned chip
+  [ ] Available chip
+  [ ] Missing chip
+  [ ] Suggestions chip
+
+M5-002 [BACKLOG] Commander legality foundation
+  Depends on: M2-004
+  Checkpoints:
+  [ ] Color identity from commander
+  [ ] Deck row legality
+  [ ] Show illegal during import review
+  [ ] Explain legality reason
+
+M5-003 [BACKLOG] Deterministic suggestion seeds
+  Depends on: M4-002, M5-002
+  Checkpoints:
+  [ ] Ramp gap detector
+  [ ] Draw gap detector
+  [ ] Interaction gap detector
+  [ ] Owned legal alternatives
+  [ ] Missing-card alternatives
+
+
+Milestone M6 - Sync Bundle And Cloud Folder Sync
+================================================
+
+Goal
+----
+
+Make the local save format ready for desktop/mobile sync without maintaining a server.
+
+Done Means
+----------
+
+- Bundle has stable IDs, schema version, revisions, and conflict strategy.
+- User can choose/export/import a sync file/folder.
+- Cloud storage can be user-owned.
+
+Items
+-----
+
+M6-001 [BACKLOG] Add revision metadata
+  Depends on: M1-008
+  Checkpoints:
+  [ ] Entity created timestamp
+  [ ] Entity updated timestamp
+  [ ] Entity revision
+  [ ] Deleted/tombstone strategy
+  [ ] Bundle schema migration notes
+
+M6-002 [BACKLOG] Define conflict rules
+  Depends on: M6-001
+  Checkpoints:
+  [ ] Same entity edited on two devices
+  [ ] Card moved on two devices
+  [ ] Container deleted on one device
+  [ ] Deck row deleted on one device
+  [ ] Never silently duplicate physical copies
+
+M6-003 [BACKLOG] Choose sync bundle location
+  Depends on: M6-001
+  Checkpoints:
+  [ ] Local default path
+  [ ] User-selected folder/file path
+  [ ] Google Drive/OneDrive/Dropbox folder compatible
+  [ ] Manual import/export first
+
+
+Milestone M7 - Android Companion
+================================
+
+Goal
+----
+
+Bring Android back as a companion once the desktop/shared core is mature.
+
+Done Means
+----------
+
+- Android consumes the same core data model.
+- Android can read/write sync bundle safely.
+- Android focuses on lookup, table-side checks, and physical movement.
+
+Items
+-----
+
+M7-001 [PARKED] Reconcile Android prototype with shared core
+  Depends on: M6-001
+  Checkpoints:
+  [ ] Replace duplicate Android domain models
+  [ ] Use shared-core models
+  [ ] Decide Android persistence approach
+  [ ] Preserve companion scope
+
+M7-002 [PARKED] Android sync bundle support
+  Depends on: M7-001, M6-003
+  Checkpoints:
+  [ ] Load bundle
+  [ ] Save bundle
+  [ ] Handle conflicts
+  [ ] Keep movement explicit
+
+
+Parking Lot
+===========
+
+P-001 [PARKED] Proper Windows installer
+  Checkpoints:
+  [ ] Generate `.exe` / `.msi`
+  [ ] App icon
+  [ ] Start menu shortcut
+
+P-002 [PARKED] SQLite persistence
+  Reason:
+  JSON is good enough for the first sync-bundle-shaped persistence pass.
+  Checkpoints:
+  [ ] Reassess once search/import/querying gets heavier
+
+P-003 [PARKED] Git repository repair/check
+  Reason:
+  Shell `git status` currently reports this folder is not a repository despite `.git` being visible.
+  Checkpoints:
+  [ ] Inspect `.git`
+  [ ] Decide whether to repair or re-init
+  [ ] Do not lose current work
+
+P-004 [PARKED] AI/Hugging Face layer
+  Reason:
+  Deterministic facts must exist first.
+  Checkpoints:
+  [ ] CommanderDM exploration
+  [ ] Structured prompt facts
+  [ ] Beginner explanation mode
+  [ ] Advanced concise mode
